@@ -1,0 +1,13 @@
+{
+  "name": "com.side-xp.speedrun",
+  "version": "0.0.1",
+  "description": "Bundle of utilities to handle common \"speedrunnable\" game features (timers, chapters, highscores, ...).",
+  "displayName": "SideXP - Speedrun",
+  "unity": "6000.0",
+  "author": {
+    "name": "Sideways Experiments",
+    "email": "dev@side-xp.com",
+    "url": "https://side-xp.com"
+  },
+  "licensesUrl": "https://creativecommons.org/licenses/by/4.0"
+}
