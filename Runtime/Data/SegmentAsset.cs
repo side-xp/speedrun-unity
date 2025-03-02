@@ -16,6 +16,12 @@ namespace SideXP.Speedrun
 
         #region Fields
 
+        [Header("References")]
+
+        [SerializeField]
+        [Tooltip("The " + nameof(SpeedrunAsset) + " that contains this segment.")]
+        private SpeedrunAsset _speedrunAsset = null;
+
         [Header("Label")]
 
         [SerializeField]
@@ -44,6 +50,9 @@ namespace SideXP.Speedrun
 
         /// <inheritdoc cref="_description"/>
         public string Description => _description;
+
+        /// <inheritdoc cref="_speedrunAsset"/>
+        public SpeedrunAsset SpeedrunAsset => _speedrunAsset;
 
         /// <inheritdoc cref="_steps"/>
         public StepAsset[] Steps => _steps;

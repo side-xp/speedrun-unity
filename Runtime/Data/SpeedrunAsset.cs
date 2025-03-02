@@ -50,7 +50,8 @@ namespace SideXP.Speedrun
         public SegmentAsset[] Segments => _segments;
 
         /// <summary>
-        /// 
+        /// Checks if a <see cref="Speedrun"/> instance has been started from this asset, and is still being played (neither canceled or
+        /// finished).
         /// </summary>
         public bool HasActiveSpeedrunInstance => _speedrunInstance != null && !_speedrunInstance.IsCanceled && !_speedrunInstance.IsFinished;
 
@@ -151,6 +152,52 @@ namespace SideXP.Speedrun
                 Debug.LogWarning($"Failed to cancel the {nameof(Speedrun)} instance from this asset: The existing instance has already been finished.", this);
             else
                 _speedrunInstance.Cancel();
+        }
+
+        /// <inheritdoc cref="FindSegment(SegmentAsset, out Segment)"/>
+        /// <inheritdoc cref="Speedrun.FindSegment(SegmentAsset)"/>
+        public Segment FindSegment(SegmentAsset segmentAsset)
+        {
+            return FindSegment(segmentAsset, out Segment segment) ? segment : null;
+        }
+
+        /// <summary>
+        /// Gets a <see cref="Segment"/> instance from the <see cref="Speedrun"/> instance started from this asset.
+        /// </summary>
+        /// <inheritdoc cref="Speedrun.FindSegment(SegmentAsset, out Segment)"/>
+        public bool FindSegment(SegmentAsset segmentAsset, out Segment segment)
+        {
+            if (_speedrunInstance == null)
+            {
+                Debug.LogWarning($"Failed to get a {nameof(Segment)} instance from this asset: No {nameof(Speedrun)} instance has been started yet.", this);
+                segment = null;
+                return false;
+            }
+
+            return _speedrunInstance.FindSegment(segmentAsset, out segment);
+        }
+
+        /// <inheritdoc cref="FindStep(StepAsset, out Step)"/>
+        /// <inheritdoc cref="Speedrun.FindStep(StepAsset)"/>
+        public Step FindStep(StepAsset stepAsset)
+        {
+            return FindStep(stepAsset, out Step step) ? step : null;
+        }
+
+        /// <summary>
+        /// Gets a <see cref="Step"/> instance from the <see cref="Speedrun"/> instance started from this asset.
+        /// </summary>
+        /// <inheritdoc cref="Speedrun.FindStep(StepAsset, out Step)"/>
+        public bool FindStep(StepAsset stepAsset, out Step step)
+        {
+            if (_speedrunInstance == null)
+            {
+                Debug.LogWarning($"Failed to get a {nameof(Step)} instance from this asset: No {nameof(Speedrun)} instance has been started yet.", this);
+                step = null;
+                return false;
+            }
+
+            return _speedrunInstance.FindStep(stepAsset, out step);
         }
 
         #endregion

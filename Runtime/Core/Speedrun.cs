@@ -384,6 +384,60 @@ namespace SideXP.Speedrun
             return true;
         }
 
+        /// <summary>
+        /// Finds a <see cref="Segment"/> instance from this speedrun that has been created from a given asset.
+        /// </summary>
+        /// <param name="segmentAsset">The asset from which the <see cref="Segment"/> instance to get has been created.</param>
+        /// <returns>Returns the found <see cref="Segment"/> instance created from the given asset.</returns>
+        public Segment FindSegment(SegmentAsset segmentAsset)
+        {
+            foreach (Segment segment in _segments)
+            {
+                if (segment.SegmentAsset == segmentAsset)
+                    return segment;
+            }
+
+            return null;
+        }
+
+        /// <inheritdoc cref="FindSegment(SegmentAsset)"/>
+        /// <param name="segment">Outputs the found <see cref="Segment"/> instance created from the given asset.</param>
+        /// <returns>Returns true if a <see cref="Segment"/> instance has been found successfully.</returns>
+        public bool FindSegment(SegmentAsset segmentAsset, out Segment segment)
+        {
+            segment = FindSegment(segmentAsset);
+            return segment != null;
+        }
+
+        /// <summary>
+        /// Finds a <see cref="Step"/> instance from this speedrun that has been created from a given asset.
+        /// </summary>
+        /// <param name="stepAsset">The asset from which the <see cref="Step"/> instance to get has been created.</param>
+        /// <returns>Returns the found <see cref="Step"/> instance created from the given asset.</returns>
+        public Step FindStep(StepAsset stepAsset)
+        {
+            // Cancel if the segment that contains the given step asset doesn't exist
+            if (!FindSegment(stepAsset.SegmentAsset, out Segment segment))
+                return null;
+
+            foreach (Step step in segment.Steps)
+            {
+                if (step.StepAsset == stepAsset)
+                    return step;
+            }
+
+            return null;
+        }
+
+        /// <inheritdoc cref="FindStep(StepAsset)"/>
+        /// <param name="step">Outputs the found <see cref="Step"/> instance created from the given asset.</param>
+        /// <returns>Returns true if a <see cref="Step"/> instance has been found successfully.</returns>
+        public bool FindStep(StepAsset stepAsset, out Step step)
+        {
+            step = FindStep(stepAsset);
+            return step != null;
+        }
+
         #endregion
 
 

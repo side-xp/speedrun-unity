@@ -10,24 +10,9 @@ namespace SideXP.Speedrun
 {
 
     /// <summary>
-    /// 
+    /// Represents a checkpoint in a segment.
     /// </summary>
     [HelpURL(Constants.BaseHelpUrl)]
-    [CreateAssetMenu(fileName = "NewCheckpointAsset", menuName = Constants.CreateAssetMenu + "/CheckpointAsset")]
-    public class CheckpointAsset : StepAsset
-    {
-    
-        #region Fields
-        #endregion
-
-    
-        #region Lifecycle
-        #endregion
-
-    
-        #region Public API
-        #endregion
-
-    }
+    public class CheckpointAsset : StepAsset { }
 
 }

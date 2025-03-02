@@ -10,24 +10,9 @@ namespace SideXP.Speedrun
 {
 
     /// <summary>
-    /// 
+    /// Represents something that can be unlocked or discovered in a segment.
     /// </summary>
     [HelpURL(Constants.BaseHelpUrl)]
-    [CreateAssetMenu(fileName = "NewUnlockableAsset", menuName = Constants.CreateAssetMenu + "/UnlockableAsset")]
-    public class UnlockableAsset : ScriptableObject
-    {
-    
-        #region Fields
-        #endregion
-
-    
-        #region Lifecycle
-        #endregion
-
-    
-        #region Public API
-        #endregion
-
-    }
+    public class UnlockableAsset : ScriptableObject { }
 
 }
