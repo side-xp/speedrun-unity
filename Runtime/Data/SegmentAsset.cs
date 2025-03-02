@@ -25,11 +25,6 @@ namespace SideXP.Speedrun
         [Header("Label")]
 
         [SerializeField]
-        [Tooltip("The name of this segment, as displayed on UI." +
-            "\nIf not defined, uses the asset name instead.")]
-        private string _displayName = null;
-
-        [SerializeField]
         [Tooltip("The description of this segment, as displayed on UI.")]
         private string _description = null;
 
@@ -46,7 +41,7 @@ namespace SideXP.Speedrun
         #region Public API
 
         /// <inheritdoc cref="_displayName"/>
-        public string DisplayName => !string.IsNullOrWhiteSpace(_displayName) ? _displayName : name;
+        public string DisplayName => name;
 
         /// <inheritdoc cref="_description"/>
         public string Description => _description;
