@@ -21,12 +21,12 @@ namespace SideXP.Speedrun
         /// </summary>
         public static readonly SpeedrunSettings Default = new SpeedrunSettings
         {
-            AutoFinish = true
+            FinishOnCompleteLastCheckpoint = true
         };
 
-        [Tooltip("By default, a segment is marked as finished when all its steps are completed or by calling its Finish() function manually." +
-            "\nIf enabled, a Segment will be automatically marked as finished if its last Checkpoint step is completed, without taking account of other steps.")]
-        public bool AutoFinish;
+        [Tooltip("By default, a " + nameof(Segment) + " is considered finished when all its checkpoints are completed, or by calling its " + nameof(Segment.Finish) + "() function manually." +
+            "\nIf enabled, a " + nameof(Segment) + " will be considered finished as soon as its last checkpoint is completed, no matter the other ones.")]
+        public bool FinishOnCompleteLastCheckpoint;
 
     }
 

@@ -73,7 +73,7 @@ namespace SideXP.Speedrun
         /// <summary>
         /// Is this step a checkpoint?
         /// </summary>
-        public bool IsCheckpoint => _stepAsset is CheckpointAsset;
+        public bool IsCheckpoint => _stepAsset != null && _stepAsset.IsCheckpoint;
 
         /// <summary>
         /// Marks this step as completed.

@@ -11,23 +11,24 @@ namespace SideXP.Speedrun
 
     /// <inheritdoc cref="Step"/>
     [HelpURL(Constants.BaseHelpUrl)]
-    [CreateAssetMenu(fileName = "NewStepAsset", menuName = Constants.CreateAssetMenu + "/StepAsset")]
-    public abstract class StepAsset : ScriptableObject
+    public class StepAsset : ScriptableObject
     {
 
         #region Fields
 
-        [Header("References")]
-
         [SerializeField]
-        [Tooltip("The " + nameof(SegmentAsset) + " that contains this step.")]
+        [Tooltip("The " + nameof(SegmentAsset) + " that contains this " + nameof(Step) + ".")]
         private SegmentAsset _segmentAsset = null;
 
-        [Header("Label")]
+        [SerializeField, TextArea(3, 6)]
+        [Tooltip("The description of this " + nameof(Step) + ", as displayed on UI.")]
+        private string _description = null;
 
         [SerializeField]
-        [Tooltip("The description of this segment, as displayed on UI.")]
-        private string _description = null;
+        [Tooltip("Does this step counts as milestone that can cause the " + nameof(Segment) + " to finish?" +
+            "\nBy default, a " + nameof(Segment) + " is considered finished when all its checkpoints are completed, or by calling its " + nameof(Segment.Finish) + "() function manually." +
+            "\nIf the " + nameof(SpeedrunSettings.FinishOnCompleteLastCheckpoint) + " option is enabled on the " + nameof(Speedrun) + " instance, a " + nameof(Segment) + " will be considered finished as soon as its last checkpoint is completed, no matter the other ones.")]
+        private bool _isCheckpoint = false;
 
         #endregion
 
@@ -39,6 +40,9 @@ namespace SideXP.Speedrun
 
         /// <inheritdoc cref="_description"/>
         public string Description => _description;
+
+        /// <inheritdoc cref="_isCheckpoint"/>
+        public bool IsCheckpoint => _isCheckpoint;
 
         /// <inheritdoc cref="_segmentAsset"/>
         public SegmentAsset SegmentAsset => _segmentAsset;

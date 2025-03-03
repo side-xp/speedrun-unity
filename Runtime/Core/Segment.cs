@@ -182,11 +182,34 @@ namespace SideXP.Speedrun
         /// <inheritdoc cref="Speedrun.StepChangeDelegate"/>
         private void HandleStepChange(Step step)
         {
-            // Automaticaly mark this segment as finished if the last checkpoint has been completed and auto-finish is allowed
-            if (!IsFinished && _speedrun.Settings.AutoFinish && step.IsCheckpoint && LastCheckpoint == step)
-                Finish();
+            // If this segment is not yet finished
+            if (!IsFinished && step.IsCheckpoint && step.IsCompleted)
+            {
+                // Check if all checkpoints have been completed
+                bool areAllCheckpointsFinished = true;
+                foreach (Step s in _steps)
+                {
+                    if (s.IsCheckpoint && !s.IsCompleted)
+                    {
+                        areAllCheckpointsFinished = false;
+                        break;
+                    }
+                }
 
-            _onChange(this);
+                // Mark this segment as finished if all the checkpoints have been completed
+                if (areAllCheckpointsFinished)
+                    Finish();
+                // Mark this segment as finished if only the last checkpoint counts, and has just been completed
+                else if (_speedrun.Settings.FinishOnCompleteLastCheckpoint && LastCheckpoint == step)
+                    Finish();
+                // Just notify the change in any other case
+                else
+                    _onChange(this);
+            }
+            else
+            {
+                _onChange(this);
+            }
         }
 
         #endregion
