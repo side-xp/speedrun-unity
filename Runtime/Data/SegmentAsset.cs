@@ -16,19 +16,13 @@ namespace SideXP.Speedrun
 
         #region Fields
 
-        [Header("References")]
-
         [SerializeField]
         [Tooltip("The " + nameof(SpeedrunAsset) + " that contains this segment.")]
         private SpeedrunAsset _speedrunAsset = null;
 
-        [Header("Label")]
-
-        [SerializeField]
+        [SerializeField, TextArea(3, 6)]
         [Tooltip("The description of this segment, as displayed on UI.")]
         private string _description = null;
-
-        [Header("Progression")]
 
         [SerializeField]
         [Tooltip("The steps of this segment." +

@@ -19,8 +19,6 @@ namespace SideXP.Speedrun
 
         #region Fields
 
-        [Header("Run Settings")]
-
         [SerializeField]
         [Tooltip("Defines the settings to use for a run.")]
         private SpeedrunSettings _settings = SpeedrunSettings.Default;
