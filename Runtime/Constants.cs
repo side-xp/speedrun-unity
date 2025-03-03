@@ -19,14 +19,24 @@ namespace SideXP.Speedrun
         public const string CompanyName = "Sideways Experiments";
 
         /// <summary>
+        /// Name of this package.
+        /// </summary>
+        public const string PackageName = "Speedrun";
+
+        /// <summary>
         /// Base URL for online documentation of the framework. You must concatenate your own path starting with "/".
         /// </summary>
         public const string BaseHelpUrl = "https://github.com/side-xp/speedrun-unity";
 
         /// <summary>
+        /// Base path used for <see cref="UnityEngine.AddComponentMenu"/>. You must concatenate your own path starting with "/".
+        /// </summary>
+        public const string AddComponentMenu = CompanyName + "/" + PackageName;
+
+        /// <summary>
         /// Base path used for <see cref="UnityEngine.CreateAssetMenuAttribute"/>. You must concatenate your own path starting with "/".
         /// </summary>
-        public const string CreateAssetMenu = CompanyName + "/Speedrun";
+        public const string CreateAssetMenu = CompanyName + "/" + PackageName;
 
     }
 

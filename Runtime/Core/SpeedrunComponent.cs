@@ -64,14 +64,6 @@ namespace SideXP.Speedrun
             this.hideFlags = HideFlags;
         }
 
-        private void OnDisable()
-        {
-            if (s_instance != this)
-                return;
-
-            Debug.LogError($"The singleton instance of {nameof(SpeedrunComponent)} has been disabled, so {nameof(Speedrun)} instances won't be updated anymore.", this);
-        }
-
         private void OnDestroy()
         {
             if (s_instance == this)

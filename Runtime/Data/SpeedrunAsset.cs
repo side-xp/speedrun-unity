@@ -54,25 +54,32 @@ namespace SideXP.Speedrun
         public bool HasActiveSpeedrunInstance => _speedrunInstance != null && !_speedrunInstance.IsCanceled && !_speedrunInstance.IsFinished;
 
         /// <summary>
-        /// Starts a new <see cref="Speedrun"/> instance.
+        /// Creates a new <see cref="Speedrun"/> instance.
         /// </summary>
         /// <remarks>
+        /// <para>
+        /// You may want to call <see cref="StartSpeedrun()"/> soon after to actually start the run.
+        /// </para>
+        /// <para>
         /// This function overload is designed to be used from the inspector, especially from Unity Events. if you want to start a
-        /// <see cref="Speedrun"/> instance through scripting, prefer usinn the <see cref="StartSpeedrun(out Speedrun)"/> overload, which
-        /// outputs the started instance directly.<br/>
+        /// <see cref="Speedrun"/> instance through scripting, prefer using the <see cref="CreateSpeedrun(out Speedrun)"/> overload, which
+        /// outputs the started instance directly.
+        /// </para>
+        /// <para>
         /// In any case, you can get the started instance with <see cref="SpeedrunInstance"/>.
+        /// </para>
         /// </remarks>
-        public void StartSpeedrun()
+        public void CreateSpeedrun()
         {
-            StartSpeedrun(out _);
+            CreateSpeedrun(out _);
         }
 
         /// <remarks></remarks>
-        /// <inheritdoc cref="StartSpeedrun()"/>
+        /// <inheritdoc cref="CreateSpeedrun()"/>
         /// <param name="speedrun">Outputs the created <see cref="Speedrun"/> instance, or the existing one if it's not yet finished or
         /// canceled.</param>
-        /// <returns>Returns true if a <see cref="Speedrun"/> instance has been started successfully.</returns>
-        public bool StartSpeedrun(out Speedrun speedrun)
+        /// <returns>Returns true if a <see cref="Speedrun"/> instance has been created successfully.</returns>
+        public bool CreateSpeedrun(out Speedrun speedrun)
         {
             speedrun = _speedrunInstance;
 
@@ -80,7 +87,7 @@ namespace SideXP.Speedrun
             {
                 if (!speedrun.IsStarted)
                 {
-                    Debug.LogWarning($"A {nameof(Speedrun)} instance was already existing from this asset, but has never been started (which shouldn't happen). That instance will be started instead of creating a new one.", this);
+                    return true;
                 }
                 if (speedrun.IsCanceled)
                 {
@@ -103,7 +110,40 @@ namespace SideXP.Speedrun
                 _speedrunInstance = speedrun;
             }
 
-            speedrun.Start();
+            return speedrun != null;
+        }
+
+        /// <summary>
+        /// Starts a new <see cref="Speedrun"/> instance.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This function overload is designed to be used from the inspector, especially from Unity Events. if you want to start a
+        /// <see cref="Speedrun"/> instance through scripting, prefer using the <see cref="StartSpeedrun(out Speedrun)"/> overload, which
+        /// outputs the started instance directly.
+        /// </para>
+        /// <para>
+        /// In any case, you can get the started instance with <see cref="SpeedrunInstance"/>.
+        /// </para>
+        /// </remarks>
+        public void StartSpeedrun()
+        {
+            StartSpeedrun(out _);
+        }
+
+        /// <remarks></remarks>
+        /// <inheritdoc cref="StartSpeedrun()"/>
+        /// <param name="speedrun">Outputs the created <see cref="Speedrun"/> instance, or the existing one if it's not yet finished or
+        /// canceled.</param>
+        /// <returns>Returns true if a <see cref="Speedrun"/> instance has been started successfully.</returns>
+        public bool StartSpeedrun(out Speedrun speedrun)
+        {
+            if (!CreateSpeedrun(out speedrun))
+                return false;
+
+            if (!speedrun.IsStarted)
+                speedrun.Start();
+            
             return true;
         }
 
