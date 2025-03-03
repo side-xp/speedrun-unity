@@ -29,9 +29,6 @@ namespace SideXP.Speedrun.EditorOnly
         internal const string SpeedrunProp = "_speedrunAsset";
         private const string DescriptionProp = "_description";
         private const string StepsArrayProp = "_steps";
-        private const string Step_SegmentProp = "_segmentAsset";
-        private const string Step_IsCheckpointProp = "_isCheckpoint";
-        private const string Step_DescriptionProp = "_description";
 
         private SerializedProperty _speedrunProp = null;
         private SerializedProperty _descriptionProp = null;
@@ -67,6 +64,8 @@ namespace SideXP.Speedrun.EditorOnly
 
             EditorGUILayout.PropertyField(_descriptionProp);
 
+            serializedObject.ApplyModifiedProperties();
+
             // Draw segments list
             EditorGUILayout.Space();
             _stepsReorderableList.DoLayoutList();
@@ -96,7 +95,7 @@ namespace SideXP.Speedrun.EditorOnly
                 Standalone.CreateAndAttachAsset<StepAsset>(list.serializedProperty, assetObj =>
                 {
                     // Assign the owning Speedrun asset to the created Segment asset
-                    SerializedProperty segmentprop = assetObj.FindProperty(Step_SegmentProp);
+                    SerializedProperty segmentprop = assetObj.FindProperty(StepAssetEditor.SegmentProp);
                     segmentprop.objectReferenceValue = list.serializedProperty.serializedObject.targetObject;
                     assetObj.ApplyModifiedPropertiesWithoutUndo();
                 });
@@ -164,7 +163,7 @@ namespace SideXP.Speedrun.EditorOnly
                 }
 
                 SerializedObject stepAssetObj = new SerializedObject(stepAsset);
-                SerializedProperty isCheckpointProp = stepAssetObj.FindProperty(Step_IsCheckpointProp);
+                SerializedProperty isCheckpointProp = stepAssetObj.FindProperty(StepAssetEditor.IsCheckpointProp);
 
                 // Draw foldout
                 rect.x += FoldoutOffset;
@@ -192,7 +191,7 @@ namespace SideXP.Speedrun.EditorOnly
 
                 if (stepItemProp.isExpanded)
                 {
-                    SerializedProperty descriptionProp = stepAssetObj.FindProperty(Step_DescriptionProp);
+                    SerializedProperty descriptionProp = stepAssetObj.FindProperty(StepAssetEditor.DescriptionProp);
 
                     rect.x = position.x + StepFoldoutWidth + Standalone.HMargin;
                     rect.width = position.width - StepFoldoutWidth;

@@ -67,7 +67,9 @@ namespace SideXP.Speedrun.EditorOnly
         {
             // Draw settings property
             EditorGUILayout.PropertyField(_settingsProp);
-            
+
+            serializedObject.ApplyModifiedProperties();
+
             // Draw segments list
             EditorGUILayout.Space();
             _segmentsReorderableList.DoLayoutList();
@@ -82,18 +84,6 @@ namespace SideXP.Speedrun.EditorOnly
                 EditorGUILayout.Space();
                 SelectedSegmentEditor.OnInspectorGUI();
             }
-        }
-
-        /// <summary>
-        /// Draws the custom GUI for editing a <see cref="SegmentAsset"/>.
-        /// </summary>
-        /// <param name="segmentProp">The serialized representation of property taht references the <see cref="SegmentAsset"/> to
-        /// edit.</param>
-        private void DrawSegmentGUI(SerializedProperty segmentProp)
-        {
-            SegmentAsset segmentAsset = segmentProp.objectReferenceValue as SegmentAsset;
-            SerializedObject segmentAssetObj = new SerializedObject(segmentAsset);
-
         }
 
         #endregion
