@@ -52,6 +52,9 @@ namespace SideXP.Speedrun
         /// </summary>
         public SpeedrunAsset SpeedrunAsset => _segmentAsset != null ? _segmentAsset.SpeedrunAsset : null;
 
+        /// <inheritdoc cref="Step.IsCompleted"/>
+        public bool IsCompleted => SpeedrunAsset.FindStep(this, out Step step) && step.IsCompleted;
+
         /// <summary>
         /// Marks this step as completed in the <see cref="Speedrun"/> instance started from the owning <see cref="SpeedrunAsset"/>.
         /// </summary>

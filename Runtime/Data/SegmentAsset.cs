@@ -46,6 +46,12 @@ namespace SideXP.Speedrun
         /// <inheritdoc cref="_steps"/>
         public StepAsset[] Steps => _steps;
 
+        /// <inheritdoc cref="Segment.IsCompleted"/>
+        public bool IsCompleted => SpeedrunAsset.FindSegment(this, out Segment segment) && segment.IsCompleted;
+
+        /// <inheritdoc cref="Segment.IsFinished"/>
+        public bool IsFinished => SpeedrunAsset.FindSegment(this, out Segment segment) && segment.IsFinished;
+
         #endregion
 
     }
