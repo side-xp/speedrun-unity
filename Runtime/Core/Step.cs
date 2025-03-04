@@ -4,18 +4,34 @@
  * Contact: dev@side-xp.com
  */
 
+using System;
+
 using UnityEngine;
 
 namespace SideXP.Speedrun
 {
 
     /// <summary>
-    /// Represents the state of a single step in a <see cref="SideXP.Speedrun.Segment"/> instance.
+    /// Represents the state of a single step in a <see cref="Speedrun.Segment"/> instance.
     /// </summary>
     public class Step
     {
 
+        #region Delegates
+
+        /// <summary>
+        /// Called when this step is completed.
+        /// </summary>
+        /// <param name="step">The completed step.</param>
+        public delegate void CompleteDelegate(Step step);
+
+        #endregion
+
+
         #region Fields
+
+        /// <inheritdoc cref="CompleteDelegate"/>
+        public event CompleteDelegate OnComplete;
 
         /// <summary>
         /// The <see cref="Segment"/> instance to which this step belongs.
@@ -28,14 +44,14 @@ namespace SideXP.Speedrun
         private StepAsset _stepAsset = null;
 
         /// <summary>
-        /// Is this step completed?
+        /// The date and time when this Step has been completed.
         /// </summary>
-        private bool _isCompleted = false;
+        private DateTime? _completedAt = null;
 
         /// <summary>
         /// The function to call when the state of this step changes.
         /// </summary>
-        private Speedrun.StepChangeDelegate _onChange = null;
+        private Run.StepChangeDelegate _onChange = null;
 
         #endregion
 
@@ -46,7 +62,7 @@ namespace SideXP.Speedrun
         /// <param name="stepAsset">The asset from which this instance is created.</param>
         /// <param name="segment"><inheritdoc cref="_segment" path="/summary"/></param>
         /// <param name="onChange"><inheritdoc cref="_onChange" path="/summary"/></param>
-        internal Step(StepAsset stepAsset, Segment segment, Speedrun.StepChangeDelegate onChange)
+        internal Step(StepAsset stepAsset, Segment segment, Run.StepChangeDelegate onChange)
         {
             _stepAsset = stepAsset;
             _segment = segment;
@@ -66,9 +82,12 @@ namespace SideXP.Speedrun
 
         /// <inheritdoc cref="_segment"/>
         public Segment Segment => _segment;
+        
+        /// <inheritdoc cref="Segment.Run"/>
+        public Run Run => _segment.Run;
 
-        /// <inheritdoc cref="_isCompleted"/>
-        public bool IsCompleted => _isCompleted;
+        /// <inheritdoc cref="_completedAt"/>
+        public bool IsCompleted => _completedAt != null;
 
         /// <summary>
         /// Is this step a checkpoint?
@@ -81,13 +100,28 @@ namespace SideXP.Speedrun
         /// <returns>Returns true if this step has been marked as completed successfully.</returns>
         public bool Complete()
         {
-            if (_isCompleted)
+            if (_segment.IsEnded)
             {
-                Debug.LogWarning($"Failed to mark the {nameof(Step)} \"{DisplayName}\" as completed: That instance is already marked as completed.", _stepAsset);
+                Debug.LogWarning($"Failed to complete the {nameof(Step)} \"{DisplayName}\": Its owning {nameof(Segment)} instance is already ended.", _stepAsset);
+                return false;
+            }
+            else if (IsCompleted)
+            {
+                Debug.LogWarning($"Failed to complete the {nameof(Step)} \"{DisplayName}\": That instance is already marked as completed.", _stepAsset);
                 return false;
             }
 
-            _isCompleted = true;
+            _completedAt = Run.TimeMilliseconds.ToDateTime();
+
+            try
+            {
+                OnComplete?.Invoke(this);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+
             _onChange?.Invoke(this);
             return true;
         }

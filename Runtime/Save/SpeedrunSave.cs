@@ -16,9 +16,9 @@ namespace SideXP.Speedrun
     {
 
         /// <summary>
-        /// Saves the state of the <see cref="Speedrun"/> instance started from a given asset.
+        /// Saves the state of the <see cref="Run"/> instance started from a given asset.
         /// </summary>
-        /// <param name="speedrunAsset">The asset from which the <see cref="Speedrun"/> instance to save has been started.</param>
+        /// <param name="speedrunAsset">The asset from which the <see cref="Run"/> instance to save has been started.</param>
         /// <param name="username">The name of the user that played the run.</param>
         /// <param name="replaceRule"><inheritdoc cref="ESaveReplacementRule" path="/summary"/></param>
         /// <returns>Returns true if the entry has been saved successfully.</returns>
