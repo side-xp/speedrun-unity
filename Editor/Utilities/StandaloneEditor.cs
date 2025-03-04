@@ -15,9 +15,9 @@ namespace SideXP.Speedrun.EditorOnly
 {
 
     /// <summary>
-    /// Miscellaneous functions and extensions from our core library used in this package.
+    /// Miscellaneous functions and extensions from our core library used in this package for editor features.
     /// </summary>
-    public static class Standalone
+    public static class StandaloneEditor
     {
 
         #region GUI
@@ -27,26 +27,9 @@ namespace SideXP.Speedrun.EditorOnly
         public static readonly Color DarkSeparatorColor = new Color(0, 0, 0, .53f);
         public const float DefaultSeparatorSize = 2f;
 
-        // Fonts
-        public const int MinFontSize = 1;
-        public const int MaxFontSize = 255;
-
         // Margins
         public const float HMargin = 2f;
         public const float VMargin = 2f;
-
-        // Sizing
-        //public const float HeightXL = 48f;
-        //public const float HeightL = 36f;
-        //public const float HeightM = 28f;
-        public const float HeightS = 20f;
-        //public const float HeightXS = 16f;
-
-        //public const float WidthXL = 200f;
-        //public const float WidthL = 148f;
-        public const float WidthM = 112f;
-        public const float WidthS = 80f;
-        public const float WidthXS = 40f;
 
         /// <inheritdoc cref="HorizontalSeparator(float, bool, bool)"/>
         public static void HorizontalSeparator(bool wide = false, bool dark = false)
@@ -112,78 +95,6 @@ namespace SideXP.Speedrun.EditorOnly
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Copies the input style, and sets the font style to <see cref="FontStyle.Italic"/>.
-        /// </summary>
-        /// <inheritdoc cref="BoldItalic(GUIStyle)"/>
-        public static GUIStyle Italic(this GUIStyle style)
-        {
-            GUIStyle newStyle = new GUIStyle(style);
-            newStyle.fontStyle = FontStyle.Italic;
-            return newStyle;
-        }
-
-        /// <summary>
-        /// Copies the input style, and sets the text alignment.
-        /// </summary>
-        /// <param name="alignment">The text alignment to set.</param>
-        /// <inheritdoc cref="Margin(GUIStyle, int, int, int, int)"/>
-        public static GUIStyle TextAlignment(this GUIStyle style, TextAnchor alignment)
-        {
-            GUIStyle newStyle = new GUIStyle(style);
-            newStyle.alignment = alignment;
-            return newStyle;
-        }
-
-        ///// <summary>
-        ///// Copies the input style, and sets the text alignment to <see cref="TextAnchor.MiddleLeft"/>.
-        ///// </summary>
-        ///// <inheritdoc cref="TextAlignment(GUIStyle, TextAnchor)"/>
-        //public static GUIStyle AlignLeft(this GUIStyle style)
-        //{
-        //    return TextAlignment(style, TextAnchor.MiddleLeft);
-        //}
-
-        ///// <summary>
-        ///// Copies the input style, and sets the text alignment to <see cref="TextAnchor.MiddleCenter"/>.
-        ///// </summary>
-        ///// <inheritdoc cref="TextAlignment(GUIStyle, TextAnchor)"/>
-        //public static GUIStyle AlignCenter(this GUIStyle style)
-        //{
-        //    return TextAlignment(style, TextAnchor.MiddleCenter);
-        //}
-
-        /// <summary>
-        /// Copies the input style, and sets the text alignment to <see cref="TextAnchor.MiddleRight"/>.
-        /// </summary>
-        /// <inheritdoc cref="TextAlignment(GUIStyle, TextAnchor)"/>
-        public static GUIStyle AlignRight(this GUIStyle style)
-        {
-            return TextAlignment(style, TextAnchor.MiddleRight);
-        }
-
-        /// <summary>
-        /// Copies the input style, and sets the given font size.
-        /// </summary>
-        /// <param name="fontSize">The font size to set.</param>
-        /// <inheritdoc cref="Margin(GUIStyle, int, int, int, int)"/>
-        public static GUIStyle FontSize(this GUIStyle style, int fontSize)
-        {
-            GUIStyle newStyle = new GUIStyle(style);
-            newStyle.fontSize = Mathf.Clamp(fontSize, MinFontSize, MaxFontSize);
-            return newStyle;
-        }
-
-        /// <summary>
-        /// Copies the input style, and set the font size by adding the given difference to the original size.
-        /// </summary>
-        /// <param name="diff">The difference to add to the original font size.</param>
-        /// <inheritdoc cref="FontSize(GUIStyle, int)"/>
-        public static GUIStyle FontSizeDiff(this GUIStyle style, int diff)
-        {
-            return FontSize(style, style.fontSize + diff);
         }
 
         #endregion

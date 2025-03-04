@@ -78,7 +78,7 @@ namespace SideXP.Speedrun.EditorOnly
             if (SelectedSegmentEditor != null)
             {
                 EditorGUILayout.Space();
-                Standalone.HorizontalSeparator();
+                StandaloneEditor.HorizontalSeparator();
                 EditorGUILayout.LabelField(SelectedSegmentEditor.target.name, TitleLabelStyle, GUILayout.Height(TitleLabelHeight));
 
                 EditorGUILayout.Space();
@@ -157,7 +157,7 @@ namespace SideXP.Speedrun.EditorOnly
             // "Add" button behavior
             list.onAddCallback = list =>
             {
-                Standalone.CreateAndAttachAsset<SegmentAsset>(list.serializedProperty, assetObj =>
+                StandaloneEditor.CreateAndAttachAsset<SegmentAsset>(list.serializedProperty, assetObj =>
                 {
                     // Assign the owning Speedrun asset to the created Segment asset
                     SerializedProperty speedrunProp = assetObj.FindProperty(SegmentAssetEditor.SpeedrunProp);
@@ -205,7 +205,7 @@ namespace SideXP.Speedrun.EditorOnly
             // Calculate the height of a single element in the list
             list.elementHeightCallback = index =>
             {
-                return EditorGUIUtility.singleLineHeight + Standalone.VMargin * 2;
+                return EditorGUIUtility.singleLineHeight + StandaloneEditor.VMargin * 2;
             };
 
             // Draw element GUI
@@ -215,7 +215,7 @@ namespace SideXP.Speedrun.EditorOnly
                 SegmentAsset segmentAsset = segmentItemProp.objectReferenceValue as SegmentAsset;
 
                 Rect rect = position;
-                rect.y += Standalone.VMargin;
+                rect.y += StandaloneEditor.VMargin;
                 rect.height = EditorGUIUtility.singleLineHeight;
 
                 if (segmentAsset == null)
@@ -224,7 +224,7 @@ namespace SideXP.Speedrun.EditorOnly
                     return;
                 }
 
-                rect.width -= SegmentStepsCountFieldWidth + Standalone.HMargin;
+                rect.width -= SegmentStepsCountFieldWidth + StandaloneEditor.HMargin;
                 EditorGUI.BeginChangeCheck();
                 string name = EditorGUI.DelayedTextField(rect, segmentAsset.name);
                 if (EditorGUI.EndChangeCheck())
@@ -233,7 +233,7 @@ namespace SideXP.Speedrun.EditorOnly
                     AssetDatabase.SaveAssets();
                 }
 
-                rect.x += rect.width + Standalone.HMargin;
+                rect.x += rect.width + StandaloneEditor.HMargin;
                 rect.width = SegmentStepsCountFieldWidth;
                 EditorGUI.LabelField(rect, segmentAsset.Steps.Length + " Steps", EditorStyles.label.Italic().AlignRight());
             };

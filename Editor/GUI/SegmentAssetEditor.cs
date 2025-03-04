@@ -92,7 +92,7 @@ namespace SideXP.Speedrun.EditorOnly
             // "Add" button behavior
             list.onAddCallback = list =>
             {
-                Standalone.CreateAndAttachAsset<StepAsset>(list.serializedProperty, assetObj =>
+                StandaloneEditor.CreateAndAttachAsset<StepAsset>(list.serializedProperty, assetObj =>
                 {
                     // Assign the owning Speedrun asset to the created Segment asset
                     SerializedProperty segmentprop = assetObj.FindProperty(StepAssetEditor.SegmentProp);
@@ -136,12 +136,12 @@ namespace SideXP.Speedrun.EditorOnly
             list.elementHeightCallback = index =>
             {
                 SerializedProperty stepItemProp = list.serializedProperty.GetArrayElementAtIndex(index);
-                float height = EditorGUIUtility.singleLineHeight + Standalone.VMargin * 2;
+                float height = EditorGUIUtility.singleLineHeight + StandaloneEditor.VMargin * 2;
                 if (!stepItemProp.isExpanded)
                     return height;
 
                 // Add space for addition Step fields
-                height += EditorGUIUtility.singleLineHeight + StepDescriptionFieldHeight + Standalone.VMargin * 2;
+                height += EditorGUIUtility.singleLineHeight + StepDescriptionFieldHeight + StandaloneEditor.VMargin * 2;
                 return height;
             };
 
@@ -152,7 +152,7 @@ namespace SideXP.Speedrun.EditorOnly
                 StepAsset stepAsset = stepItemProp.objectReferenceValue as StepAsset;
 
                 Rect rect = position;
-                rect.y += Standalone.VMargin;
+                rect.y += StandaloneEditor.VMargin;
                 rect.height = EditorGUIUtility.singleLineHeight;
                 
                 // Cancel if the step asset reference is not valid
@@ -172,7 +172,7 @@ namespace SideXP.Speedrun.EditorOnly
 
                 // Draw step name field
                 rect.x += rect.width;
-                rect.width = position.width - rect.width - IsCheckpointFieldWidth - Standalone.HMargin;
+                rect.width = position.width - rect.width - IsCheckpointFieldWidth - StandaloneEditor.HMargin;
                 EditorGUI.BeginChangeCheck();
                 string name = EditorGUI.DelayedTextField(rect, stepAsset.name);
                 if (EditorGUI.EndChangeCheck())
@@ -182,7 +182,7 @@ namespace SideXP.Speedrun.EditorOnly
                 }
 
                 // Draw "is checkpoint" field
-                rect.x += rect.width + Standalone.HMargin;
+                rect.x += rect.width + StandaloneEditor.HMargin;
                 rect.width = IsCheckpointFieldWidth;
                 float previousLabelWidth = EditorGUIUtility.labelWidth;
                 EditorGUIUtility.labelWidth = IsCheckpointLabelWidth;
@@ -193,12 +193,12 @@ namespace SideXP.Speedrun.EditorOnly
                 {
                     SerializedProperty descriptionProp = stepAssetObj.FindProperty(StepAssetEditor.DescriptionProp);
 
-                    rect.x = position.x + StepFoldoutWidth + Standalone.HMargin;
+                    rect.x = position.x + StepFoldoutWidth + StandaloneEditor.HMargin;
                     rect.width = position.width - StepFoldoutWidth;
-                    rect.y += rect.height + Standalone.VMargin;
+                    rect.y += rect.height + StandaloneEditor.VMargin;
                     EditorGUI.LabelField(rect, descriptionProp.GetLabel());
 
-                    rect.y += rect.height + Standalone.VMargin;
+                    rect.y += rect.height + StandaloneEditor.VMargin;
                     rect.height = StepDescriptionFieldHeight;
                     descriptionProp.stringValue = EditorGUI.TextArea(rect, descriptionProp.stringValue);
                 }
